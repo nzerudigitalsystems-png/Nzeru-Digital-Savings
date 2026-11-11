@@ -6,7 +6,7 @@ if [ ! -d "/opt/buildhome/flutter" ]; then
 fi
 flutter config --enable-web
 flutter pub get
-flutter build web --release --dart-define=API_BASE_URL="${API_BASE_URL:-https://nzeru-digital-savings-production.up.railway.app/api}"
+flutter build web --release --dart-define=API_BASE_URL="${API_BASE_URL:-https://nzeru-digital-savings-production-27a02bec.up.railway.app/api}"
 """
 publish = "build/web"
 

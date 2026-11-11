@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// Tokens are persisted to SharedPreferences so sessions survive app restarts.
 class ApiService {
   static const String _defaultBaseUrl =
-      'https://nzeru-digital-savings-production.up.railway.app/api';
+      'https://nzeru-digital-savings-production-27a02bec.up.railway.app/api';
   static const String _envBaseUrl = String.fromEnvironment(
     'API_BASE_URL',
     defaultValue: _defaultBaseUrl,
