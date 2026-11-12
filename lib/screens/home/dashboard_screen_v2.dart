@@ -72,35 +72,45 @@ class _DashboardScreenV2State extends State<DashboardScreenV2> {
                 ),
                 padding: const EdgeInsets.fromLTRB(14, 10, 14, 76),
                 children: [
-                  _PhoneHeader(
-                    name: userName,
-                    darkMode: darkMode,
-                    onNotifications: () =>
-                        Navigator.pushNamed(context, AppRoutes.notifications),
+                  OverflowBox(
+                    minWidth: 0,
+                    maxWidth: MediaQuery.sizeOf(context).width,
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      width: MediaQuery.sizeOf(context).width,
+                      child: _PhoneHeader(
+                        name: userName,
+                        darkMode: darkMode,
+                        onNotifications: () => Navigator.pushNamed(
+                          context,
+                          AppRoutes.notifications,
+                        ),
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 8),
                   _SectionRow(
                     title: 'Nzeru Savings Plans',
                     trailing: plans.isEmpty ? null : '${plans.length} tracked',
                     darkMode: darkMode,
                   ),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 6),
                       plans.isEmpty
                       ? const _EmptyPlanShimmer()
                       : _TopPlansRail(plans: plans, darkMode: darkMode),
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 8),
                   _PerformanceCard(candles: candles, finance: finance),
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 8),
                   _SectionRow(title: 'Nzeru Quick Actions', darkMode: darkMode),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 6),
                   const _QuickActionsRow(),
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 8),
                   _SectionRow(
                     title: 'Recent Transactions',
                     trailing: DateFormat('dd MMM').format(DateTime.now()),
                     darkMode: darkMode,
                   ),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 6),
                   _TransactionsPanel(
                     transactions: transactions.take(5).toList(),
                   ),
@@ -161,37 +171,28 @@ class _PhoneHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final initial = name.isEmpty ? 'U' : name[0].toUpperCase();
     return Container(
-      padding: const EdgeInsets.fromLTRB(14, 12, 14, 16),
+      padding: const EdgeInsets.fromLTRB(14, 7, 14, 7),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [AppColors.brandBlue, AppColors.brandBlueDark],
         ),
-        borderRadius: BorderRadius.circular(28),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.12),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.12),
-            blurRadius: 18,
-            offset: const Offset(0, 8),
-          ),
-        ],
+        borderRadius: BorderRadius.zero,
+        boxShadow: const [],
       ),
       child: Column(
         children: [
           Row(
             children: [
               CircleAvatar(
-                radius: 22,
+              radius: 17,
                 backgroundColor: AppColors.tiffanyBlueLight,
                 child: Text(
                   initial,
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w700,
-                      fontSize: 18,
+                      fontSize: 14,
                       color: AppColors.brandBlueDark),
                 ),
               ),
@@ -203,7 +204,7 @@ class _PhoneHeader extends StatelessWidget {
                     Text(
                       'Welcome back',
                       style: GoogleFonts.poppins(
-                        fontSize: 13,
+                        fontSize: 11,
                         fontWeight: FontWeight.w500,
                         color: Colors.white.withValues(alpha: 0.82),
                       ),
@@ -212,8 +213,8 @@ class _PhoneHeader extends StatelessWidget {
                     Text(
                       name,
                       style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        height: 0.95,
+                      fontSize: 14,
+                      height: 1.0,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
@@ -224,8 +225,8 @@ class _PhoneHeader extends StatelessWidget {
               GestureDetector(
                 onTap: onNotifications,
                 child: Container(
-                  width: 58,
-                  height: 58,
+                  width: 36,
+                  height: 36,
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.12),
                     shape: BoxShape.circle,
@@ -243,16 +244,16 @@ class _PhoneHeader extends StatelessWidget {
                       const Center(
                         child: Icon(
                           Icons.notifications_none_rounded,
-                          size: 31,
+                          size: 20,
                           color: Colors.white,
                         ),
                       ),
                       Positioned(
-                        top: 13,
-                        right: 15,
+                        top: 6,
+                        right: 7,
                         child: Container(
-                          width: 11,
-                          height: 11,
+                          width: 8,
+                          height: 8,
                           decoration: BoxDecoration(
                             color: const Color(0xFF801818),
                             shape: BoxShape.circle,
@@ -265,14 +266,6 @@ class _PhoneHeader extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-          const SizedBox(height: 10),
-          Container(
-            height: 4,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(999),
-              color: AppColors.brandBlue,
-            ),
           ),
         ],
       ),
@@ -550,7 +543,7 @@ class _TopPlansRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 184,
+      height: 142,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
@@ -558,7 +551,7 @@ class _TopPlansRail extends StatelessWidget {
         separatorBuilder: (_, __) => const SizedBox(width: 10),
         itemBuilder: (context, index) {
           return SizedBox(
-            width: 142,
+            width: 136,
             child: _TopSavingsPlanCard(plan: plans[index], darkMode: darkMode),
           );
         },
@@ -576,14 +569,14 @@ class _PerformanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 10),
+      padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [Color(0xFF8B0000), Color(0xFF6D0000)],
         ),
-        borderRadius: BorderRadius.circular(26),
+        borderRadius: BorderRadius.circular(14),
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.10),
         ),
@@ -608,7 +601,7 @@ class _PerformanceCard extends StatelessWidget {
                     Text(
                       'Nzeru Performance',
                       style: GoogleFonts.poppins(
-                        fontSize: 16,
+                        fontSize: 13,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
@@ -616,7 +609,7 @@ class _PerformanceCard extends StatelessWidget {
                     Text(
                       'Savings Analytics',
                       style: GoogleFonts.poppins(
-                        fontSize: 11,
+                        fontSize: 9,
                         color: Colors.white.withValues(alpha: 0.74),
                       ),
                     ),
@@ -625,8 +618,8 @@ class _PerformanceCard extends StatelessWidget {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 10,
+                  horizontal: 7,
+                  vertical: 4,
                 ),
                 decoration: BoxDecoration(
                   color: Colors.white.withValues(alpha: 0.10),
@@ -639,7 +632,7 @@ class _PerformanceCard extends StatelessWidget {
                     Text(
                       'TOTAL SAVED',
                       style: GoogleFonts.poppins(
-                        fontSize: 10,
+                        fontSize: 8,
                         color: Colors.white.withValues(alpha: 0.68),
                       ),
                     ),
@@ -648,7 +641,7 @@ class _PerformanceCard extends StatelessWidget {
                         finance.totalSaved,
                       ),
                       style: GoogleFonts.poppins(
-                        fontSize: 17,
+                        fontSize: 11,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
@@ -664,10 +657,10 @@ class _PerformanceCard extends StatelessWidget {
             title: '',
             subtitle: '',
             darkMode: false,
-            height: 94,
+            height: 50,
             borderRadius: BorderRadius.circular(18),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 4),
           Row(
             children: [
               Expanded(
@@ -707,7 +700,7 @@ class _MetricPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 3),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.09),
         borderRadius: BorderRadius.circular(14),
@@ -722,11 +715,11 @@ class _MetricPill extends StatelessWidget {
               color: Colors.white.withValues(alpha: 0.7),
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 1),
           Text(
             value,
             style: GoogleFonts.poppins(
-              fontSize: 13,
+              fontSize: 8,
               fontWeight: FontWeight.w700,
               color: Colors.white,
             ),
@@ -768,7 +761,7 @@ class _QuickActionsRow extends StatelessWidget {
             child: GestureDetector(
               onTap: () => Navigator.pushNamed(context, items[i].route),
                 child: Container(
-                height: 74,
+                height: 46,
                 decoration: BoxDecoration(
                   color: AppColors.brandBlueLight,
                   borderRadius: BorderRadius.circular(18),
@@ -778,23 +771,23 @@ class _QuickActionsRow extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 36,
-                      height: 36,
+                      width: 22,
+                      height: 22,
                       decoration: BoxDecoration(
                         color: AppColors.brandBlueDark,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
                         items[i].icon,
-                        size: 20,
+                        size: 13,
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 1),
                     Text(
                       items[i].label,
                       style: GoogleFonts.poppins(
-                        fontSize: 10,
+                        fontSize: 8,
                         fontWeight: FontWeight.w700,
                         color: AppColors.brandBlueDark,
                       ),
@@ -804,7 +797,7 @@ class _QuickActionsRow extends StatelessWidget {
               ),
             ),
           ),
-          if (i != items.length - 1) const SizedBox(width: 12),
+          if (i != items.length - 1) const SizedBox(width: 6),
         ],
       ],
     );
@@ -919,20 +912,28 @@ class _EmptyPlanShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      height: 112,
-      child: DashboardPanel(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ShimmerBlock(width: 112, height: 12),
-            SizedBox(height: 10),
-            ShimmerBlock(width: 178, height: 10),
-            SizedBox(height: 12),
-            ShimmerBlock(height: 8),
-          ],
-        ),
+    return SizedBox(
+      height: 116,
+      child: Row(
+        children: List.generate(3, (index) => Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(right: index == 2 ? 0 : 8),
+            child: const DashboardPanel(
+              padding: EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ShimmerBlock(width: 62, height: 9),
+                  SizedBox(height: 8),
+                  ShimmerBlock(width: 44, height: 8),
+                  SizedBox(height: 10),
+                  ShimmerBlock(height: 7),
+                ],
+              ),
+            ),
+          ),
+        )),
       ),
     );
   }

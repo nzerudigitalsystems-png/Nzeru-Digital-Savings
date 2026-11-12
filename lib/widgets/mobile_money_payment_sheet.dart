@@ -75,16 +75,29 @@ class _MobileMoneyPaymentSheet extends StatelessWidget {
               style: GoogleFonts.poppins(fontSize: 19, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 5),
-            Text(
-              'MK ${amount.toStringAsFixed(2)}  ·  PayChangu',
-              style: GoogleFonts.poppins(color: const Color(0xFF64748B), fontSize: 13),
+            Row(
+              children: [
+                Text(
+                  'MK ${amount.toStringAsFixed(2)}',
+                  style: GoogleFonts.poppins(
+                    color: const Color(0xFF64748B),
+                    fontSize: 13,
+                  ),
+                ),
+                const Spacer(),
+                Image.asset(
+                  'assets/images/payment/paychangu.png',
+                  height: 30,
+                  width: 58,
+                  fit: BoxFit.contain,
+                ),
+              ],
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 14),
             _ProviderTile(
               name: 'Airtel Money',
               subtitle: 'Mobile money',
-              mark: 'A',
-              color: const Color(0xFFE31E2F),
+              logoAsset: 'assets/images/payment/airtel_money.png',
               onTap: () => Navigator.pop(
                 context,
                 const MobileMoneyPaymentChoice(provider: MalawiMobileMoneyProvider.airtelMoney),
@@ -94,18 +107,10 @@ class _MobileMoneyPaymentSheet extends StatelessWidget {
             _ProviderTile(
               name: 'TNM Mpamba',
               subtitle: 'Mobile money',
-              mark: 'TNM',
-              color: const Color(0xFF009B4D),
+              logoAsset: 'assets/images/payment/tnm.png',
               onTap: () => Navigator.pop(
                 context,
                 const MobileMoneyPaymentChoice(provider: MalawiMobileMoneyProvider.tnmMpamba),
-              ),
-            ),
-            const SizedBox(height: 14),
-            Center(
-              child: Text(
-                'Demo payment flow',
-                style: GoogleFonts.poppins(fontSize: 11, color: const Color(0xFF94A3B8)),
               ),
             ),
           ],
@@ -118,15 +123,13 @@ class _MobileMoneyPaymentSheet extends StatelessWidget {
 class _ProviderTile extends StatelessWidget {
   final String name;
   final String subtitle;
-  final String mark;
-  final Color color;
+  final String logoAsset;
   final VoidCallback onTap;
 
   const _ProviderTile({
     required this.name,
     required this.subtitle,
-    required this.mark,
-    required this.color,
+    required this.logoAsset,
     required this.onTap,
   });
 
@@ -150,8 +153,20 @@ class _ProviderTile extends StatelessWidget {
                 width: 48,
                 height: 48,
                 alignment: Alignment.center,
-                decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(14)),
-                child: Text(mark, style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w800, fontSize: mark.length > 1 ? 13 : 24)),
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                ),
+                child: Image.asset(
+                  logoAsset,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) => const Icon(
+                    Icons.account_balance_wallet_outlined,
+                    color: Color(0xFF64748B),
+                  ),
+                ),
               ),
               const SizedBox(width: 14),
               Expanded(
