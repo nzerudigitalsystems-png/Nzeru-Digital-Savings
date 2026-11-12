@@ -37,7 +37,8 @@ class _DashboardScreenV2State extends State<DashboardScreenV2> {
   Widget build(BuildContext context) {
     final finance = context.watch<FinanceOverviewProvider>();
     final dashboard = context.watch<DashboardProvider>();
-    final plans = finance.prioritizedPlans;
+    final plans = finance.livePlans
+      ..sort((a, b) => a.endDate.compareTo(b.endDate));
     final transactions = finance.recentTransactions;
     final candles = _buildSavingsCandles(finance);
     final userName = _firstName(finance.user?.name);
@@ -84,11 +85,8 @@ class _DashboardScreenV2State extends State<DashboardScreenV2> {
                     darkMode: darkMode,
                   ),
                   const SizedBox(height: 14),
-                  plans.isEmpty
-                      ? const SizedBox(
-                          height: 170,
-                          child: _EmptyCard(message: 'No savings plans yet.'),
-                        )
+                      plans.isEmpty
+                      ? const _EmptyPlanShimmer()
                       : _TopPlansRail(plans: plans, darkMode: darkMode),
                   const SizedBox(height: 18),
                   _PerformanceCard(candles: candles, finance: finance),
@@ -367,7 +365,7 @@ class _TopSavingsPlanCard extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+        padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -383,8 +381,8 @@ class _TopSavingsPlanCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          height: 0.95,
+                          fontSize: 12,
+                          height: 1.1,
                           fontWeight: FontWeight.w700,
                           color: darkMode
                               ? Colors.white
@@ -396,8 +394,8 @@ class _TopSavingsPlanCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 6),
                 SizedBox(
-                  width: 44,
-                  height: 44,
+                  width: 36,
+                  height: 36,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
@@ -415,7 +413,7 @@ class _TopSavingsPlanCard extends StatelessWidget {
                         child: Text(
                           '$percent%',
                           style: GoogleFonts.poppins(
-                            fontSize: 9,
+                        fontSize: 8,
                             fontWeight: FontWeight.w600,
                             color: darkMode
                                 ? const Color(0xFFF3F4F6)
@@ -428,65 +426,43 @@ class _TopSavingsPlanCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 3),
             Text(
-              plan.progressPercent >= 1 ? 'Goal' : 'Target',
-              style: GoogleFonts.poppins(
-                fontSize: 10,
-                color: darkMode
-                    ? const Color(0xFFBBC6D3)
-                    : const Color(0xFF4A4A4A),
-              ),
-            ),
-            Text(
-              CurrencyUtil.formatNoDecimal(plan.goalAmount),
-              maxLines: 2,
+              '${plan.progressPercent >= 1 ? 'Goal' : 'Target'}  ${CurrencyUtil.formatNoDecimal(plan.goalAmount)}',
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.poppins(
-                fontSize: 10,
+                fontSize: 9,
                 fontWeight: FontWeight.w600,
-                color: darkMode
-                    ? const Color(0xFFF3F4F6)
-                    : const Color(0xFF1A1A1A),
-                height: 1.2,
+                color: darkMode ? const Color(0xFFF3F4F6) : const Color(0xFF1A1A1A),
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 3),
             Text(
               rateLabel,
-              maxLines: 2,
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.poppins(
-                fontSize: 10,
+                fontSize: 8,
                 color: darkMode
                     ? const Color(0xFFD8E0EB)
                     : const Color(0xFF2E2E2E),
                 height: 1.15,
               ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              'ETA',
-              style: GoogleFonts.poppins(
-                fontSize: 10,
-                color: darkMode
-                    ? const Color(0xFFBBC6D3)
-                    : const Color(0xFF4A4A4A),
-              ),
-            ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 5),
             ClipRRect(
               borderRadius: BorderRadius.circular(999),
               child: LinearProgressIndicator(
                 value: plan.progressPercent,
-                minHeight: 10,
+                minHeight: 6,
                 backgroundColor: AppColors.primaryTiffanyLight,
                 color: percent >= 50
                     ? AppColors.loadingGreen
                     : AppColors.loadingRed,
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 5),
             Row(
               children: [
                 Container(
@@ -499,26 +475,25 @@ class _TopSavingsPlanCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(999),
                   ),
                   child: Text(
-                    plan.isEstimatedToFinishOnTime ? 'On Fi' : 'Off',
+                    plan.isEstimatedToFinishOnTime ? 'On track' : 'Behind',
                     style: GoogleFonts.poppins(
-                      fontSize: 9,
+                      fontSize: 8,
                       fontWeight: FontWeight.w600,
                       color: AppColors.brandBlue,
                     ),
                   ),
                 ),
-                const Spacer(),
                 Text(
                   progressLabel,
                   style: GoogleFonts.poppins(
-                    fontSize: 12,
+                    fontSize: 10,
                     fontWeight: FontWeight.w700,
                     color: statusColor,
                   ),
                 ),
               ],
             ),
-            const Spacer(),
+            const SizedBox(height: 4),
             Text(
               DateFormat('d MMM yyyy').format(plan.endDate),
               maxLines: 1,
@@ -575,7 +550,7 @@ class _TopPlansRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 174,
+      height: 184,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
@@ -583,7 +558,7 @@ class _TopPlansRail extends StatelessWidget {
         separatorBuilder: (_, __) => const SizedBox(width: 10),
         itemBuilder: (context, index) {
           return SizedBox(
-            width: 148,
+            width: 142,
             child: _TopSavingsPlanCard(plan: plans[index], darkMode: darkMode),
           );
         },
@@ -934,6 +909,30 @@ class _TransactionRow extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _EmptyPlanShimmer extends StatelessWidget {
+  const _EmptyPlanShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+      height: 112,
+      child: DashboardPanel(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ShimmerBlock(width: 112, height: 12),
+            SizedBox(height: 10),
+            ShimmerBlock(width: 178, height: 10),
+            SizedBox(height: 12),
+            ShimmerBlock(height: 8),
+          ],
+        ),
       ),
     );
   }

@@ -37,9 +37,9 @@ class BottomNavBar extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.fromLTRB(
             0,
-            8,
+            4,
             0,
-            MediaQuery.viewPaddingOf(context).bottom + 8,
+            MediaQuery.viewPaddingOf(context).bottom + 4,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
