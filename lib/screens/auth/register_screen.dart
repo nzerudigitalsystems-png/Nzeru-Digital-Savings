@@ -72,7 +72,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(22, 18, 22, 28),
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 18),
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 480),
               child: Form(
@@ -83,30 +83,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const Icon(
                       Icons.account_balance_wallet_rounded,
                       color: AppColors.primaryTiffany,
-                      size: 44,
+                      size: 34,
                     ),
-                    const SizedBox(height: 18),
+                    const SizedBox(height: 10),
                     Text(
                       'Join Nzeru Digital',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
-                        fontSize: 26,
+                        fontSize: 22,
                         fontWeight: FontWeight.w800,
                         color: AppColors.textPrimary,
                         letterSpacing: 0,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 5),
                     Text(
-                      'Fast, clean savings onboarding for students and parents.',
+                      'Create an account to start saving with Nzeru.',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
-                        fontSize: 14,
+                        fontSize: 12,
                         height: 1.5,
                         color: AppColors.textSecondary,
                       ),
                     ),
-                    const SizedBox(height: 18),
+                    const SizedBox(height: 12),
                     Center(
                       child: Container(
                         width: 72,
@@ -117,7 +117,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 28),
+                    const SizedBox(height: 18),
                     _RegisterField(
                       controller: _nameController,
                       labelText: 'Name',
@@ -125,7 +125,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       validator: (v) =>
                           v == null || v.trim().isEmpty ? 'Enter your name' : null,
                     ),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 9),
                     _RegisterField(
                       controller: _emailController,
                       labelText: 'Email',
@@ -134,7 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       validator: (v) =>
                           v == null || v.trim().isEmpty ? 'Enter your email' : null,
                     ),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 9),
                     _RegisterField(
                       controller: _phoneController,
                       labelText: 'Phone',
@@ -143,7 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       validator: (v) =>
                           v == null || v.trim().isEmpty ? 'Enter your phone' : null,
                     ),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 9),
                     _RegisterField(
                       controller: _passwordController,
                       labelText: 'Password',
@@ -165,7 +165,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 9),
                     _RegisterField(
                       controller: _confirmController,
                       labelText: 'Confirm Password',
@@ -184,7 +184,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 22),
+                    const SizedBox(height: 14),
                     AppButton(
                       label: 'Create Account',
                       icon: Icons.check_circle_outline_rounded,

@@ -39,16 +39,16 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.fromLTRB(24, 22, 24, 26),
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 18),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Color(0xFF14B8A6), Color(0xFF0E8F83)],
+                  colors: [AppColors.brandBlue, AppColors.brandBlueDark],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(28),
-                  bottomRight: Radius.circular(28),
+                  bottomLeft: Radius.circular(22),
+                  bottomRight: Radius.circular(22),
                 ),
               ),
               child: Column(
@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     'Welcome Back',
                     style: GoogleFonts.poppins(
-                      fontSize: 28,
+                      fontSize: 23,
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
                     ),
@@ -76,14 +76,14 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
+                padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     children: [
                       Container(
-                        width: 84,
-                        height: 84,
+                        width: 56,
+                        height: 56,
                         decoration: BoxDecoration(
                           color: AppColors.tiffanyBlue.withAlpha(18),
                           shape: BoxShape.circle,
@@ -95,15 +95,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: const Icon(
                           Icons.account_balance_wallet_rounded,
                           color: AppColors.tiffanyBlueDark,
-                          size: 40,
+                          size: 28,
                         ),
                       ).animate().scale(duration: 400.ms, curve: Curves.easeOutBack),
-                      const SizedBox(height: 28),
+                      const SizedBox(height: 16),
                       Container(
-                        padding: const EdgeInsets.all(22),
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(24),
+                            borderRadius: BorderRadius.circular(18),
                           border: Border.all(
                             color: AppColors.border,
                           ),
@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               validator: (v) =>
                                   v == null || v.trim().isEmpty ? 'Enter your email' : null,
                             ),
-                            const SizedBox(height: 16),
+                            const SizedBox(height: 12),
                             TextFormField(
                               controller: _passwordController,
                               obscureText: _obscurePassword,

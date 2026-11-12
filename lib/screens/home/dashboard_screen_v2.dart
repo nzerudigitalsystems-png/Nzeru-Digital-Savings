@@ -45,15 +45,12 @@ class _DashboardScreenV2State extends State<DashboardScreenV2> {
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton.small(
         onPressed: () => Navigator.pushNamed(context, AppRoutes.aiAssistant),
         backgroundColor: AppColors.primaryTiffany,
         foregroundColor: Colors.white,
-        icon: const Icon(Icons.auto_awesome),
-        label: const Text('AI Coach'),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-        ),
+        tooltip: 'AI Coach',
+        child: const Icon(Icons.auto_awesome_rounded, size: 20),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: Stack(
@@ -72,7 +69,7 @@ class _DashboardScreenV2State extends State<DashboardScreenV2> {
                 physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics(),
                 ),
-                padding: const EdgeInsets.fromLTRB(16, 18, 16, 28),
+                padding: const EdgeInsets.fromLTRB(14, 10, 14, 76),
                 children: [
                   _PhoneHeader(
                     name: userName,
@@ -306,7 +303,7 @@ class _SectionRow extends StatelessWidget {
             Text(
               title,
               style: GoogleFonts.poppins(
-                fontSize: 24,
+                      fontSize: 17,
                 fontWeight: FontWeight.w700,
                 color: darkMode ? Colors.white : const Color(0xFF111111),
               ),
@@ -578,7 +575,7 @@ class _TopPlansRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 196,
+        height: 174,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
@@ -586,7 +583,7 @@ class _TopPlansRail extends StatelessWidget {
         separatorBuilder: (_, __) => const SizedBox(width: 10),
         itemBuilder: (context, index) {
           return SizedBox(
-            width: 156,
+            width: 148,
             child: _TopSavingsPlanCard(plan: plans[index], darkMode: darkMode),
           );
         },
@@ -636,7 +633,7 @@ class _PerformanceCard extends StatelessWidget {
                     Text(
                       'Nzeru Performance',
                       style: GoogleFonts.poppins(
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
@@ -692,7 +689,7 @@ class _PerformanceCard extends StatelessWidget {
             title: '',
             subtitle: '',
             darkMode: false,
-            height: 130,
+            height: 94,
             borderRadius: BorderRadius.circular(18),
           ),
           const SizedBox(height: 12),
