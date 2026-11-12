@@ -58,37 +58,31 @@ class _DashboardScreenV2State extends State<DashboardScreenV2> {
         children: [
           DashboardBackdrop(darkMode: darkMode),
           SafeArea(
-            child: RefreshIndicator(
-              color: AppColors.loadingRed,
-              onRefresh: () async {
-                await Future.wait([
-                  context.read<DashboardProvider>().loadDashboard(),
-                  context.read<SavingsProvider>().loadData(),
-                ]);
-              },
-              child: ListView(
-                physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics(),
-                ),
-                padding: const EdgeInsets.fromLTRB(14, 10, 14, 76),
-                children: [
-                  OverflowBox(
-                    minWidth: 0,
-                    maxWidth: MediaQuery.sizeOf(context).width,
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      width: MediaQuery.sizeOf(context).width,
-                      child: _PhoneHeader(
-                        name: userName,
-                        darkMode: darkMode,
-                        onNotifications: () => Navigator.pushNamed(
-                          context,
-                          AppRoutes.notifications,
-                        ),
-                      ),
-                    ),
+            child: Column(
+              children: [
+                _PhoneHeader(
+                  name: userName,
+                  darkMode: darkMode,
+                  onNotifications: () => Navigator.pushNamed(
+                    context,
+                    AppRoutes.notifications,
                   ),
-                  const SizedBox(height: 8),
+                ),
+                Expanded(
+                  child: RefreshIndicator(
+                    color: AppColors.loadingRed,
+                    onRefresh: () async {
+                      await Future.wait([
+                        context.read<DashboardProvider>().loadDashboard(),
+                        context.read<SavingsProvider>().loadData(),
+                      ]);
+                    },
+                    child: ListView(
+                      physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics(),
+                      ),
+                      padding: const EdgeInsets.fromLTRB(14, 8, 14, 76),
+                      children: [
                   _SectionRow(
                     title: 'Nzeru Savings Plans',
                     trailing: plans.isEmpty ? null : '${plans.length} tracked',
@@ -146,10 +140,13 @@ class _DashboardScreenV2State extends State<DashboardScreenV2> {
                       ),
                     ),
                   ],
-                ],
-              ),
-            ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
           ),
+        ),
         ],
       ),
     );
